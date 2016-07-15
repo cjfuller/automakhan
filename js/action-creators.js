@@ -4,8 +4,12 @@ const Actions = require("./actions.js");
 const QueryParser = require("./query-parser.js");
 
 const submitJobDescription = (job) => {
-    $;
-    console.log(job);
+    $.ajax({
+        url: "/register_query",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(job),
+    });
 };
 
 const updateFrequency = (dispatch) => {
