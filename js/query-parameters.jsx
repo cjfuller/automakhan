@@ -2,47 +2,11 @@ const ice = require("icepick");
 const React = require("react");
 const { StyleSheet, css } = require("aphrodite");
 
+const Input = require("./input.jsx");
 const QueryParser = require("./query-parser.js");
+const Select = require("./select.jsx");
 const ss = require("./shared-styles.js");
 const { ParameterT } = require("./types.js");
-
-const Select = React.createClass({
-    propTypes: {
-        onChange: React.PropTypes.func,
-        options: React.PropTypes.arrayOf(React.PropTypes.string),
-        selectedValue: React.PropTypes.string,
-    },
-    renderOption: function(opt, idx) {
-        return <option key={opt} value={opt}>
-            {opt}
-        </option>;
-    },
-    render: function() {
-        return <select
-            className={css(styles.select)}
-            defaultValue={this.props.selectedValue}
-            onChange={this.props.onChange}
-            value={this.props.selectedValue}
-        >
-            {this.props.options.map(this.renderOption)}
-        </select>;
-    },
-});
-
-
-const Input = ({ onChange, value }) => {
-    return <input
-        type="text"
-        className={css(styles.input)}
-        value={value}
-        onChange={onChange}
-    />;
-};
-
-Input.propTypes = {
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.string,
-};
 
 
 const Param = ({ parameter, onSelect, onEdit }) => {
@@ -141,14 +105,6 @@ const styles = StyleSheet.create({
         border: `2px solid ${ss.borderColor}`,
         borderRadius: 5,
     },
-    input: {
-        border: "none",
-        background: "none",
-        fontFamily: "inherit",
-        fontSize: "inherit",
-        height: "100%",
-        width: "100%",
-    },
     noPadding: {
         padding: 0,
     },
@@ -170,18 +126,6 @@ const styles = StyleSheet.create({
         ':nth-of-type(even)': {
             backgroundColor: ss.backgroundColor,
         },
-    },
-    select: {
-        '-webkit-appearance': "none",
-        '-moz-appearance': "none",
-        background: "none",
-        border: "none",
-        fontFamily: "inherit",
-        fontSize: "inherit",
-        height: "100%",
-        paddingLeft: 10,
-        paddingRight: 10,
-        width: "100%",
     },
     table: {
         borderCollapse: "collapse",

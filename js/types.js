@@ -12,4 +12,11 @@ const FrequencyT = React.PropTypes.shape({
     'cron': React.PropTypes.string,  // TODO(colin): don't use cron syntax
 });
 
-module.exports = { FrequencyT, ParameterT };
+const TableT = React.PropTypes.shape({
+    // Note: these names match the ones in the bigquery API.
+    projectId: React.PropTypes.string,
+    datasetId: React.PropTypes.string,
+    tableId: React.PropTypes.string,
+});
+
+module.exports = { FrequencyT, ParameterT, TableT };

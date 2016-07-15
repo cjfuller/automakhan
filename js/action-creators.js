@@ -12,6 +12,14 @@ const submitJobDescription = (job) => {
     });
 };
 
+const updateDestination = (dispatch) => {
+    return (fieldName, value) => dispatch({
+        type: Actions.Destination,
+        field: fieldName,
+        value: value,
+    });
+};
+
 const updateFrequency = (dispatch) => {
     return (frequency) => dispatch(
         {
@@ -43,6 +51,7 @@ const updateText = (dispatch) => {
 
 module.exports = {
     submitJobDescription,
+    updateDestination,
     updateFrequency,
     updateParameter,
     updateText,

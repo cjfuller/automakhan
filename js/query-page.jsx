@@ -1,3 +1,4 @@
+const icepick = require("icepick");
 const Redux = require("redux");
 const ReactRedux = require("react-redux");
 const ReactDOM = require("react-dom");
@@ -5,12 +6,14 @@ const React = require("react");
 const {StyleSheet, css} = require("aphrodite");
 
 const Actions = require("./actions.js");
-const { FrequencyT, ParameterT } = require("./types.js");
+const { FrequencyT, ParameterT, TableT } = require("./types.js");
 const FrequencySelector = require("./frequency-selector.jsx");
+const Input = require("./input.jsx");
 const QueryParameters = require("./query-parameters.jsx");
 const ss = require("./shared-styles.js");
 const {
     submitJobDescription,
+    updateDestination,
     updateFrequency,
     updateParameter,
     updateText,
@@ -47,13 +50,24 @@ const addParameter = (state, action) => {
     return {...state, parameters: nextParameters};
 };
 
+const destinationUpdate = (state, action) => {
+    return icepick.assocIn(
+        state, ["destination", action.field], action.value);
+};
+
 const actionHandlers = {};
 actionHandlers[Actions.EditorUpdate] = editorUpdate;
 actionHandlers[Actions.Parameter] = parameterUpdate;
 actionHandlers[Actions.Frequency] = frequencyUpdate;
 actionHandlers[Actions.AddParameter] = addParameter;
+actionHandlers[Actions.Destination] = destinationUpdate;
 
 const initialState = {
+    destination: {
+        projectId: 'khanacademy.org:deductive-jet-827',
+        datasetId: '',
+        tableId: '',
+    },
     frequency: {once: true},
     parameters: {},
     queryText: "SELECT x, {{my_awesome_select}}\n" +
@@ -76,13 +90,15 @@ const Store = Redux.createStore(reducer);
 
 const QueryPage = ReactRedux.connect((s) => s)(React.createClass({
     propTypes: {
+        destination: TableT,
         dispatch: React.PropTypes.func,
         frequency: FrequencyT,
         parameters: ParameterT,
         queryText: React.PropTypes.string,
     },
     render: function() {
-        const { dispatch, frequency, parameters, queryText } = this.props;
+        const { destination, dispatch, frequency,
+                parameters, queryText } = this.props;
         return <div className={css(styles.page)}>
             Enter a query:
             <QueryEditor
@@ -99,6 +115,30 @@ const QueryPage = ReactRedux.connect((s) => s)(React.createClass({
                 onChange={updateFrequency(dispatch)}
                 frequency={frequency}
             />
+            Where should the output go?
+            <div>
+                <label className={css(styles.outputField)}>
+                    Project ID
+                    <Input
+                        onChange={(evt) => updateDestination(dispatch)("projectId", evt.target.value)}
+                        value={destination.projectId}
+                    />
+                </label>
+                <label className={css(styles.outputField)}>
+                    Dataset ID
+                    <Input
+                        onChange={(evt) => updateDestination(dispatch)("datasetId", evt.target.value)}
+                        value={destination.datasetId}
+                    />
+                </label>
+                <label className={css(styles.outputField)}>
+                    Table ID
+                    <Input
+                        onChange={(evt) => updateDestination(dispatch)("tableId", evt.target.value)}
+                        value={destination.tableId}
+                    />
+                </label>
+            </div>
             <a
                 className={css(styles.submitButton)}
                 href="javascript:void(0)"
@@ -141,6 +181,13 @@ const QueryEditor = React.createClass({
     },
 });
 const styles = StyleSheet.create({
+    outputField: {
+        display: "inline-block",
+        minWidth: 300,
+        ':not(:first-of-type)': {
+            marginLeft: 30,
+        },
+    },
     page: {
         fontFamily: ss.bodyFont,
     },
