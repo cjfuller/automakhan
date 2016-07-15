@@ -144,6 +144,8 @@ const styles = StyleSheet.create({
     input: {
         border: "none",
         background: "none",
+        fontFamily: "inherit",
+        fontSize: "inherit",
         height: "100%",
         width: "100%",
     },
