@@ -100,53 +100,77 @@ const QueryPage = ReactRedux.connect((s) => s)(React.createClass({
         const { destination, dispatch, frequency,
                 parameters, queryText } = this.props;
         return <div className={css(styles.page)}>
-            Enter a query:
-            <QueryEditor
-                onChange={updateText(dispatch)}
-            />
-            Or, upload a file (TODO)
-            <QueryParameters
-                onChangeParameter={updateParameter(dispatch)}
-                parameters={parameters}
-                queryText={queryText}
-            />
-            When should we run it?
-            <FrequencySelector
-                onChange={updateFrequency(dispatch)}
-                frequency={frequency}
-            />
-            Where should the output go?
-            <div>
-                <label className={css(styles.outputField)}>
-                    Project ID
-                    <Input
-                        onChange={(evt) => updateDestination(dispatch)("projectId", evt.target.value)}
-                        value={destination.projectId}
-                    />
-                </label>
-                <label className={css(styles.outputField)}>
-                    Dataset ID
-                    <Input
-                        onChange={(evt) => updateDestination(dispatch)("datasetId", evt.target.value)}
-                        value={destination.datasetId}
-                    />
-                </label>
-                <label className={css(styles.outputField)}>
-                    Table ID
-                    <Input
-                        onChange={(evt) => updateDestination(dispatch)("tableId", evt.target.value)}
-                        value={destination.tableId}
-                    />
-                </label>
+            <div className={css(styles.section)}>
+                <div className={css(styles.sectionTitle)}>
+                    Query
+                </div>
+                <QueryEditor
+                    onChange={updateText(dispatch)}
+                />
             </div>
-            <a
-                className={css(styles.submitButton)}
-                href="javascript:void(0)"
-                onClick={() =>
-                    submitJobDescription(Store.getState())}
-            >
-                Save and submit
-            </a>
+            <div className={css(styles.section)}>
+                <div className={css(styles.sectionTitle)}>
+                    Parameters
+                </div>
+                <QueryParameters
+                    onChangeParameter={updateParameter(dispatch)}
+                    parameters={parameters}
+                    queryText={queryText}
+                />
+            </div>
+            <div className={css(styles.section)}>
+                <div className={css(styles.sectionTitle)}>
+                    Schedule
+                </div>
+                <FrequencySelector
+                    onChange={updateFrequency(dispatch)}
+                    frequency={frequency}
+                />
+            </div>
+            <div className={css(styles.section)}>
+                <div className={css(styles.sectionTitle)}>
+                    Output
+                </div>
+                <div>
+                    <label className={css(styles.outputField)}>
+                        <div className={css(styles.subTitle)}>
+                            Project ID
+                        </div>
+                        <Input
+                            onChange={(evt) => updateDestination(dispatch)("projectId", evt.target.value)}
+                            value={destination.projectId}
+                        />
+                    </label>
+                    <label className={css(styles.outputField)}>
+                        <div className={css(styles.subTitle)}>
+                            Dataset ID
+                        </div>
+                        <Input
+                            onChange={(evt) => updateDestination(dispatch)("datasetId", evt.target.value)}
+                            value={destination.datasetId}
+                        />
+                    </label>
+                    <label className={css(styles.outputField)}>
+                        <div className={css(styles.subTitle)}>
+                            Table ID
+                        </div>
+                        <Input
+                            onChange={(evt) => updateDestination(dispatch)("tableId", evt.target.value)}
+                            value={destination.tableId}
+                        />
+                    </label>
+                </div>
+            </div>
+            <div className={css(styles.section)}>
+                <a
+                    className={css(styles.submitButton)}
+                    href="javascript:void(0)"
+                    onClick={() =>
+                        submitJobDescription(Store.getState())}
+                >
+                    Save and submit
+                </a>
+            </div>
         </div>;
     },
 }));
@@ -180,7 +204,11 @@ const QueryEditor = React.createClass({
         return <div className={css(styles.editor)} ref="editor"></div>;
     },
 });
+
 const styles = StyleSheet.create({
+    editor: {
+        border: `1px solid ${ss.borderColor}`,
+    },
     outputField: {
         display: "inline-block",
         minWidth: 300,
@@ -190,6 +218,21 @@ const styles = StyleSheet.create({
     },
     page: {
         fontFamily: ss.bodyFont,
+        fontWeight: "normal",
+        margin: 15,
+    },
+    section: {
+        paddingBottom: 15,
+        paddingTop: 15,
+    },
+    sectionTitle: {
+        fontWeight: "bold",
+        fontSize: "1.1em",
+        marginBottom: 5,
+    },
+    subTitle: {
+        fontSize: "inherit",
+        fontWeight: "bold",
     },
     submitButton: {
         border: `1px solid ${ss.borderColor}`,

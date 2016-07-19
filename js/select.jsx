@@ -26,10 +26,11 @@ const Select = React.createClass({
 
 const styles = StyleSheet.create({
     select: {
-        '-webkit-appearance': "none",
-        '-moz-appearance': "none",
+        //'-webkit-appearance': "none",
+        //'-moz-appearance': "none",
         background: "none",
         border: "none",
+        display: "inline-block",
         fontFamily: "inherit",
         fontSize: "inherit",
         height: "100%",

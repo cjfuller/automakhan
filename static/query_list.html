@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="main"></div>
+        <script type="text/javascript">
+            window._prefetch = {{ job_data | tojson | safe }};
+        </script>
+        <script type="text/javascript" src="/static/app.js"></script>
+        <script type="text/javascript">
+            var page = window.app["QueryList"];
+            page.renderInto("main");
+        </script>
+    </body>
+</html>

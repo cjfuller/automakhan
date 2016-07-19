@@ -18,11 +18,15 @@ Input.propTypes = {
 const styles = StyleSheet.create({
     input: {
         border: "none",
+        borderBottom: "1px solid #ccc",
         background: "none",
         fontFamily: "inherit",
         fontSize: "inherit",
-        height: "100%",
         width: "100%",
+        ':focus': {
+            outline: 0,
+            borderBottom: "1px solid black",
+        },
     },
 });
 

@@ -9,7 +9,7 @@ const submitJobDescription = (job) => {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(job),
-    });
+    }).then(() => window.location.href = "/list_jobs");
 };
 
 const updateDestination = (dispatch) => {
