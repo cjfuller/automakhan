@@ -1,5 +1,5 @@
-import query_server.app
+import automakhan.query_server
 
 
 if __name__ == '__main__':
-    query_server.app.run()
+    automakhan.query_server.run()
